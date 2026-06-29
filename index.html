@@ -1,242 +1,406 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lemonly Walking Challenge Dashboard: Walk to Vancouver (July 2026)">
-    <title>2026 Walking Challenge - Lemonly</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="app-container">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Lemonly Walking Challenge Dashboard: Walk to Vancouver (July 2026)" />
+		<title>2026 Walking Challenge - Lemonly</title>
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com" />
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+		<link
+			rel="stylesheet"
+			href="styles.css" />
+	</head>
+	<body>
+		<div class="app-container">
+			<!-- Header -->
+			<header class="main-header">
+				<div class="header-logo-title">
+					<img
+						src="assets/lemonly-logo.svg"
+						alt="Lemonly Logo"
+						class="lemonly-logo" />
+					<div class="header-titles">
+						<h1>2026 Walking Challenge</h1>
+						<p class="subtitle">Walk to Vancouver</p>
+					</div>
+				</div>
+				<div class="header-actions">
+					<!-- Log Steps Button (always visible) -->
+					<button
+						class="btn btn-primary"
+						id="logStepsBtn">
+						<i class="fas fa-shoe-prints"></i> Log Steps
+					</button>
+					<!-- Auth -->
+					<button
+						class="btn btn-secondary"
+						id="loginBtn">
+						<i class="fab fa-google"></i> Sign In with Google
+					</button>
+					<div
+						class="user-profile hidden"
+						id="userProfile">
+						<img
+							src=""
+							alt="User Avatar"
+							class="user-avatar"
+							id="userAvatar" />
+						<div class="user-info">
+							<span
+								class="user-name"
+								id="userName"
+								>User Name</span
+							>
+							<span
+								class="user-email"
+								id="userEmail"
+								>user@lemonly.com</span
+							>
+						</div>
+						<button
+							class="btn btn-sm btn-outline"
+							id="logoutBtn"
+							title="Sign Out">
+							<i class="fas fa-sign-out-alt"></i>
+						</button>
+					</div>
+				</div>
+			</header>
 
-        <!-- Header -->
-        <header class="main-header">
-            <div class="header-logo-title">
-                <img src="assets/lemonly-logo.svg" alt="Lemonly Logo" class="lemonly-logo">
-                <div class="header-titles">
-                    <h1>2026 Walking Challenge</h1>
-                    <p class="subtitle">Walk to Vancouver</p>
-                </div>
-            </div>
-            <div class="header-actions">
-                <!-- Log Steps Button (always visible) -->
-                <button class="btn btn-primary" id="logStepsBtn">
-                    <i class="fas fa-shoe-prints"></i> Log Steps
-                </button>
-                <!-- Auth -->
-                <button class="btn btn-secondary" id="loginBtn">
-                    <i class="fab fa-google"></i> Sign In with Google
-                </button>
-                <div class="user-profile hidden" id="userProfile">
-                    <img src="" alt="User Avatar" class="user-avatar" id="userAvatar">
-                    <div class="user-info">
-                        <span class="user-name" id="userName">User Name</span>
-                        <span class="user-email" id="userEmail">user@lemonly.com</span>
-                    </div>
-                    <button class="btn btn-sm btn-outline" id="logoutBtn" title="Sign Out">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </header>
+			<!-- Dashboard Grid -->
+			<main class="dashboard-grid">
+				<!-- LEFT: Leaderboard Card -->
+				<section class="card leaderboard-card">
+					<div class="card-header">
+						<h2><i class="fas fa-trophy"></i> Leaderboard</h2>
+						<span
+							class="badge badge-teal"
+							id="leaderboardScopeBadge"
+							>Month total</span
+						>
+					</div>
 
-        <!-- Dashboard Grid -->
-        <main class="dashboard-grid">
+					<!-- Scope Banner -->
+					<div class="leaderboard-scope-banner">
+						<span id="leaderboardScopeText">Showing: July 2026 (Month total)</span>
+						<button
+							class="btn btn-text-only hidden"
+							id="btnClearLeaderboardFilter">
+							Reset
+						</button>
+					</div>
 
-            <!-- LEFT: Leaderboard Card -->
-            <section class="card leaderboard-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-trophy"></i> Leaderboard</h2>
-                    <span class="badge badge-teal" id="leaderboardScopeBadge">Month Total</span>
-                </div>
+					<!-- Sort Presets -->
+					<div class="leaderboard-sort-bar">
+						<span class="sort-label">Sort by:</span>
+						<div class="sort-btns">
+							<button
+								class="btn btn-sort"
+								id="sortAlpha"
+								title="Sort alphabetically by first name">
+								A–Z
+							</button>
+							<button
+								class="btn btn-sort active"
+								id="sortMonthTotal"
+								title="Sort by month-to-date total steps">
+								Month total
+							</button>
+							<button
+								class="btn btn-sort"
+								id="sortThisWeek"
+								title="Sort by this week's steps">
+								This week
+							</button>
+						</div>
+					</div>
 
-                <!-- Scope Banner -->
-                <div class="leaderboard-scope-banner">
-                    <span id="leaderboardScopeText">Showing: July 2026 (Month Total)</span>
-                    <button class="btn btn-text-only hidden" id="btnClearLeaderboardFilter">Reset</button>
-                </div>
+					<!-- Leaderboard List -->
+					<div class="leaderboard-list-container">
+						<ol
+							class="leaderboard-list"
+							id="leaderboardList">
+							<li class="leaderboard-placeholder">Loading team rankings...</li>
+						</ol>
+					</div>
+				</section>
 
-                <!-- Sort Presets -->
-                <div class="leaderboard-sort-bar">
-                    <span class="sort-label">Sort by:</span>
-                    <div class="sort-btns">
-                        <button class="btn btn-sort" id="sortAlpha" title="Sort alphabetically by first name">A–Z</button>
-                        <button class="btn btn-sort active" id="sortMonthTotal" title="Sort by month-to-date total steps">Month total</button>
-                        <button class="btn btn-sort" id="sortThisWeek" title="Sort by this week's steps">This week</button>
-                    </div>
-                </div>
+				<!-- RIGHT: Progress + Calendar stacked -->
+				<div class="right-column">
+					<!-- Progress Card (no map) -->
+					<section class="card progress-card">
+						<div class="card-header">
+							<h2><i class="fas fa-chart-line"></i> Progress</h2>
+							<div
+								class="badge badge-teal"
+								id="globalPercentBadge">
+								0% Complete
+							</div>
+						</div>
 
-                <!-- Leaderboard List -->
-                <div class="leaderboard-list-container">
-                    <ol class="leaderboard-list" id="leaderboardList">
-                        <li class="leaderboard-placeholder">Loading team rankings...</li>
-                    </ol>
-                </div>
-            </section>
+						<!-- Thermometer Visual -->
+						<div class="thermometer-section">
+							<div class="thermometer-labels">
+								<span class="therm-label-start">Sioux Falls</span>
+								<span
+									class="therm-label-mid"
+									id="thermometerProgressText"
+									>0 / 3,224,000 steps</span
+								>
+								<span class="therm-label-end">Vancouver</span>
+							</div>
+							<div class="thermometer-bar">
+								<div
+									class="thermometer-fill"
+									id="thermometerFill"
+									style="width: 0%"></div>
+							</div>
+						</div>
 
-            <!-- RIGHT: Progress + Calendar stacked -->
-            <div class="right-column">
+						<!-- Stats Grid -->
+						<div class="metrics-grid">
+							<div class="metric-card">
+								<span class="metric-title">Total steps</span>
+								<div class="metric-value-group">
+									<span
+										class="metric-value"
+										id="statSteps"
+										>0</span
+									>
+								</div>
+								<div
+									class="metric-sub-value"
+									id="statGoalDiff">
+									3,224,000 to go
+								</div>
+							</div>
+							<div class="metric-card">
+								<span class="metric-title">Total distance</span>
+								<div class="metric-value-group">
+									<span
+										class="metric-value"
+										id="statMiles"
+										>0</span
+									>
+									<span class="metric-unit">mi</span>
+								</div>
+								<div
+									class="metric-sub-value"
+									id="statKm">
+									0 km
+								</div>
+							</div>
+							<div class="metric-card">
+								<span class="metric-title">Daily avg (team)</span>
+								<div class="metric-value-group">
+									<span
+										class="metric-value"
+										id="statDailyAvg"
+										>0</span
+									>
+								</div>
+								<div class="metric-sub-value">steps/day</div>
+							</div>
+							<div class="metric-card">
+								<span class="metric-title">Daily avg / person</span>
+								<div class="metric-value-group">
+									<span
+										class="metric-value"
+										id="statPersonAvg"
+										>0</span
+									>
+								</div>
+								<div class="metric-sub-value">steps/person/day</div>
+							</div>
+						</div>
+					</section>
 
-                <!-- Progress Card (no map) -->
-                <section class="card progress-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-chart-line"></i> Progress</h2>
-                        <div class="badge badge-teal" id="globalPercentBadge">0% Complete</div>
-                    </div>
+					<!-- Calendar Card -->
+					<section class="card calendar-card">
+						<div class="card-header">
+							<h2><i class="far fa-calendar-alt"></i> Calendar</h2>
+							<div class="calendar-header-actions">
+								<button
+									class="btn btn-sm btn-ghost"
+									id="btnCalToday">
+									Today
+								</button>
+								<button
+									class="btn btn-sm btn-ghost"
+									id="btnCalClear">
+									Clear
+								</button>
+								<span
+									class="badge badge-teal"
+									id="calendarSelectionFeedback"
+									>Month total</span
+								>
+							</div>
+						</div>
 
-                    <!-- Thermometer Visual -->
-                    <div class="thermometer-section">
-                        <div class="thermometer-labels">
-                            <span class="therm-label-start">Sioux Falls</span>
-                            <span class="therm-label-mid" id="thermometerProgressText">0 / 3,224,000 steps</span>
-                            <span class="therm-label-end">Vancouver</span>
-                        </div>
-                        <div class="thermometer-bar">
-                            <div class="thermometer-fill" id="thermometerFill" style="width: 0%"></div>
-                        </div>
-                    </div>
+						<div class="calendar-container">
+							<!-- Month title (clickable to reset to month view) -->
+							<div class="calendar-month-title">
+								<h3 id="calendarCurrentHeader">July 2026</h3>
+							</div>
 
-                    <!-- Stats Grid -->
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <span class="metric-title">Total Steps</span>
-                            <div class="metric-value-group">
-                                <span class="metric-value" id="statSteps">0</span>
-                            </div>
-                            <div class="metric-sub-value" id="statGoalDiff">3,224,000 to go</div>
-                        </div>
-                        <div class="metric-card">
-                            <span class="metric-title">Total Distance</span>
-                            <div class="metric-value-group">
-                                <span class="metric-value" id="statMiles">0</span> <span class="metric-unit">mi</span>
-                            </div>
-                            <div class="metric-sub-value" id="statKm">0 km</div>
-                        </div>
-                        <div class="metric-card">
-                            <span class="metric-title">Daily Avg (Team)</span>
-                            <div class="metric-value-group">
-                                <span class="metric-value" id="statDailyAvg">0</span>
-                            </div>
-                            <div class="metric-sub-value">steps/day</div>
-                        </div>
-                        <div class="metric-card">
-                            <span class="metric-title">Daily Avg / Person</span>
-                            <div class="metric-value-group">
-                                <span class="metric-value" id="statPersonAvg">0</span>
-                            </div>
-                            <div class="metric-sub-value">steps/person/day</div>
-                        </div>
-                    </div>
-                </section>
+							<!-- Weekday Headers -->
+							<div class="calendar-grid-header">
+								<div>S</div>
+								<div>M</div>
+								<div>T</div>
+								<div>W</div>
+								<div>T</div>
+								<div>F</div>
+								<div>S</div>
+							</div>
 
-                <!-- Calendar Card -->
-                <section class="card calendar-card">
-                    <div class="card-header">
-                        <h2><i class="far fa-calendar-alt"></i> Calendar</h2>
-                        <div class="calendar-header-actions">
-                            <button class="btn btn-sm btn-ghost" id="btnCalToday">Today</button>
-                            <button class="btn btn-sm btn-ghost" id="btnCalClear">Clear</button>
-                            <span class="badge badge-teal" id="calendarSelectionFeedback">Month Total</span>
-                        </div>
-                    </div>
+							<!-- Calendar Cells -->
+							<div
+								class="calendar-grid"
+								id="calendarGrid"></div>
+						</div>
+					</section>
+				</div>
+				<!-- /.right-column -->
+			</main>
+		</div>
+		<!-- /.app-container -->
 
-                    <div class="calendar-container">
-                        <!-- Month title (clickable to reset to month view) -->
-                        <div class="calendar-month-title">
-                            <h3 id="calendarCurrentHeader">July 2026</h3>
-                        </div>
+		<!-- Log Steps / Entry Modal -->
+		<div
+			class="modal-overlay hidden"
+			id="entryModal">
+			<div class="modal-container">
+				<header class="modal-header">
+					<h3 id="modalTitle">Log steps</h3>
+					<button
+						class="modal-close-btn"
+						id="modalCloseBtn">
+						&times;
+					</button>
+				</header>
 
-                        <!-- Weekday Headers -->
-                        <div class="calendar-grid-header">
-                            <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
-                        </div>
+				<div class="modal-body">
+					<!-- Existing entries -->
+					<div class="existing-entries-section">
+						<h4>Entries for <span id="modalDateText">July 1, 2026</span></h4>
+						<div
+							class="existing-entries-list"
+							id="existingEntriesList">
+							<p class="no-entries">No steps logged for this day yet.</p>
+						</div>
+					</div>
 
-                        <!-- Calendar Cells -->
-                        <div class="calendar-grid" id="calendarGrid"></div>
-                    </div>
-                </section>
+					<!-- Form section (auth-gated) -->
+					<div
+						class="log-form-section"
+						id="logFormSection">
+						<h4 id="formActionTitle">Add entry</h4>
+						<form id="entryForm">
+							<input
+								type="hidden"
+								id="entryDocId"
+								value="" />
 
-            </div><!-- /.right-column -->
+							<!-- Date Picker (shown when opened from header button) -->
+							<div
+								class="form-group"
+								id="formDateGroup">
+								<label for="entryDate">Date</label>
+								<input
+									type="date"
+									id="entryDate"
+									min="2026-07-01"
+									max="2026-07-31"
+									value="2026-07-01" />
+							</div>
 
-        </main>
-    </div><!-- /.app-container -->
+							<div class="form-group">
+								<label for="entryUserName">Team member</label>
+								<select
+									id="entryUserName"
+									required>
+									<option
+										value=""
+										disabled
+										selected>
+										Select a Lemonhead…
+									</option>
+								</select>
+							</div>
 
-    <!-- Log Steps / Entry Modal -->
-    <div class="modal-overlay hidden" id="entryModal">
-        <div class="modal-container">
-            <header class="modal-header">
-                <h3 id="modalTitle">Log Steps</h3>
-                <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
-            </header>
+							<div class="form-group">
+								<label for="entrySteps">Number of steps</label>
+								<input
+									type="number"
+									id="entrySteps"
+									placeholder="e.g. 10000"
+									min="0"
+									required />
+							</div>
 
-            <div class="modal-body">
-                <!-- Existing entries -->
-                <div class="existing-entries-section">
-                    <h4>Entries for <span id="modalDateText">July 1, 2026</span></h4>
-                    <div class="existing-entries-list" id="existingEntriesList">
-                        <p class="no-entries">No steps logged for this day yet.</p>
-                    </div>
-                </div>
+							<div
+								class="form-error hidden"
+								id="entryFormError"></div>
+							<div
+								class="form-success hidden"
+								id="entryFormSuccess"></div>
 
-                <!-- Form section (auth-gated) -->
-                <div class="log-form-section" id="logFormSection">
-                    <h4 id="formActionTitle">Add Entry</h4>
-                    <form id="entryForm">
-                        <input type="hidden" id="entryDocId" value="">
+							<div class="form-actions">
+								<button
+									type="button"
+									class="btn btn-outline"
+									id="btnCancelEdit"
+									style="display: none">
+									Cancel edit
+								</button>
+								<button
+									type="submit"
+									class="btn btn-primary"
+									id="btnSubmitEntry">
+									<i class="fas fa-save"></i> Save entry
+								</button>
+							</div>
+						</form>
+					</div>
 
-                        <!-- Date Picker (shown when opened from header button) -->
-                        <div class="form-group" id="formDateGroup">
-                            <label for="entryDate">Date</label>
-                            <input type="date" id="entryDate"
-                                min="2026-07-01" max="2026-07-31"
-                                value="2026-07-01">
-                        </div>
+					<!-- Not signed in -->
+					<div
+						class="auth-required-notice hidden"
+						id="authRequiredNotice">
+						<i class="fas fa-lock"></i>
+						<p>Sign in with a @lemonly.com or @clickrain.com account to log steps.</p>
+						<button
+							class="btn btn-secondary btn-center"
+							id="modalLoginBtn">
+							<i class="fab fa-google"></i> Sign in with Google
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        <div class="form-group">
-                            <label for="entryUserName">Team Member</label>
-                            <select id="entryUserName" required>
-                                <option value="" disabled selected>Select a Lemonhead…</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="entrySteps">Number of Steps</label>
-                            <input type="number" id="entrySteps" placeholder="e.g. 10000" min="0" required>
-                        </div>
-
-                        <div class="form-error hidden" id="entryFormError"></div>
-                        <div class="form-success hidden" id="entryFormSuccess"></div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-outline" id="btnCancelEdit" style="display:none;">Cancel Edit</button>
-                            <button type="submit" class="btn btn-primary" id="btnSubmitEntry">
-                                <i class="fas fa-save"></i> Save Entry
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Not signed in -->
-                <div class="auth-required-notice hidden" id="authRequiredNotice">
-                    <i class="fas fa-lock"></i>
-                    <p>Sign in with a @lemonly.com or @clickrain.com account to log steps.</p>
-                    <button class="btn btn-secondary btn-center" id="modalLoginBtn">
-                        <i class="fab fa-google"></i> Sign In with Google
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase Compat UMD (works with file:// protocol) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="app.js"></script>
-</body>
+		<!-- Firebase Compat UMD (works with file:// protocol) -->
+		<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+		<script src="app.js"></script>
+	</body>
 </html>

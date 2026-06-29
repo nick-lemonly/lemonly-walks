@@ -884,4 +884,16 @@ body {
 
     /* Single column leaderboard on mobile */
     .leaderboard-list { grid-template-columns: 1fr; }
+
+    /* Wrap header actions below the title instead of overflowing */
+    .main-header {
+        flex-wrap: wrap;
+        row-gap: 0.6rem;
+    }
+
+    .header-actions {
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        justify-content: flex-start;
+    }
 }
