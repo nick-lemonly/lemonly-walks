@@ -578,6 +578,7 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     align-content: start;
+    padding-top: 3px;
 }
 
 .calendar-grid::-webkit-scrollbar { width: 4px; }
@@ -619,7 +620,7 @@ body {
 /* Range states */
 .calendar-day.range-start,
 .calendar-day.range-end {
-    background: var(--color-teal) !important;
+    background: var(--color-teal-accessible) !important;
     color: var(--color-white) !important;
     font-weight: 800;
 }
@@ -642,7 +643,7 @@ body {
 
 /* Today */
 .calendar-day.today {
-    outline: 2px solid var(--color-coral);
+    outline: 2px solid var(--color-teal-accessible);
     outline-offset: 1px;
 }
 

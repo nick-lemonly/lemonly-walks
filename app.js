@@ -437,7 +437,7 @@ function updateLeaderboard() {
     // Determine scope text
     let scopeText = "";
     if (state.viewMode === "month") {
-        scopeText = "Showing: July 2026 (Month Total)";
+        scopeText = "Showing: July 2026 (Month total)";
         leaderboardScopeBadge.textContent = "Month Total";
         leaderboardScopeBadge.className   = "badge badge-teal";
         btnClearLeaderboardFilter.classList.add('hidden');
