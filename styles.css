@@ -578,6 +578,7 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     align-content: start;
+    justify-items: center;
     padding-top: 3px;
 }
 
